@@ -12,6 +12,13 @@ import models.Item;
 import persistence.item.ItemPersistence;
 
 public class TesteUsecase extends Usecase<TesteInput, TesteOutput> {
+
+  public void validate(TesteInput input) throws TesteErrors {
+    if (input.getName() == null || input.getName().isEmpty()) {
+      throw new TesteErrors("Nome não pode ser vazio");
+    }
+  }
+
   public TesteOutput exec(TesteInput input) throws TesteErrors {
     ExampleUtil example = new ExampleUtil();
     example.exec();
