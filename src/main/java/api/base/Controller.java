@@ -1,8 +1,9 @@
-package base;
+package api.base;
 
 import utils.Log;
 import utils.Time;
 import errors.AplicationError;
+import java.io.IOException;
 
 public abstract class Controller <I,O> {
   public ApiResponse run(I input) throws AplicationError {

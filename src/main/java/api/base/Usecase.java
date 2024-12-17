@@ -1,7 +1,8 @@
-package base;
+package api.base;
 
 import errors.AplicationError;
 import utils.Log;
+import java.io.IOException;
 
 public abstract class Usecase <I, O> {
   public O run(I input) throws AplicationError {

@@ -1,4 +1,4 @@
-package infra.restfull.controllers;
+package api.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import usecases.teste.TesteUsecase;
-import usecases.teste.TesteOutput;
-import usecases.teste.TesteInput;
+import api.usecases.teste.TesteUsecase;
+import api.usecases.teste.TesteOutput;
+import api.usecases.teste.TesteInput;
 import errors.AplicationError;
-import base.Controller;
-import base.ApiResponse;
+import api.base.Controller;
+import api.base.ApiResponse;
 
 @RestController
 public class TesteController extends Controller<TesteInput, TesteOutput> {

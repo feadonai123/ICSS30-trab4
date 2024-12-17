@@ -1,4 +1,4 @@
-package usecases.teste;
+package api.usecases.teste;
 
 public class TesteOutput {
   private String message;

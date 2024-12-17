@@ -1,4 +1,4 @@
-package infra.restfull.handlers;
+package api.middlewares;
 
 import errors.AplicationError;
 import errors.ResponseError;
