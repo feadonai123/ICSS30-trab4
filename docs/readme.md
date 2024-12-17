@@ -1,0 +1,4 @@
+## To compile
+```
+mvn compile
+```
