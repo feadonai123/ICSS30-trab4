@@ -8,6 +8,9 @@ import services.queue.MessageProducer;
 import services.queue.RabbitMQConfig;
 import config.Variables;
 
+import models.Item;
+import persistence.item.ItemPersistence;
+
 public class TesteUsecase extends Usecase<TesteInput, TesteOutput> {
   public TesteOutput exec(TesteInput input) throws TesteErrors {
     ExampleUtil example = new ExampleUtil();
@@ -15,6 +18,10 @@ public class TesteUsecase extends Usecase<TesteInput, TesteOutput> {
 
     TesteOutput response = new TesteOutput();
     response.setMessage("Hello " + input.getName());
+
+    Item item = new Item("Item 1");
+    ItemPersistence persistence = ItemPersistence.getInstance();
+    persistence.save(item);
 
     String routingKey = "event1";
     try{
