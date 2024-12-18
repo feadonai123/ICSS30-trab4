@@ -4,7 +4,10 @@ import services.queue.MessageConsumer;
 import services.queue.RabbitMQConfig;
 import errors.AplicationError;
 
-import events.event1.Event1;
+import events.pagamentoAprovado.PagamentoAprovado;
+import events.pagamentoRecusado.PagamentoRecusado;
+import events.pedidoEnviado.PedidoEnviado;
+
 import events.base.EventBase;
 import config.Variables;
 
@@ -17,8 +20,14 @@ public class Event {
   public static String PEDIDOS_EXCLUIDOS = "pedidos_excluidos";
 
   public static void run() throws AplicationError {
-    Event1 event = new Event1();
-    Event.enrollEvent(event);
+    PagamentoAprovado pagamentoAprovado = new PagamentoAprovado();
+    Event.enrollEvent(pagamentoAprovado);
+
+    PagamentoRecusado pagamentoRecusado = new PagamentoRecusado();
+    Event.enrollEvent(pagamentoRecusado);
+
+    PedidoEnviado pedidoEnviado = new PedidoEnviado();
+    Event.enrollEvent(pedidoEnviado);
   }
   private static void enrollEvent(EventBase event) throws AplicationError {
     try{
