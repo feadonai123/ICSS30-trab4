@@ -1,11 +1,13 @@
-package api.base;
+package api.usecases.listProdutos;
 
-public class ApiResponse<T> {
+import models.Produto;
+
+public class DTOListProdutos {
   private String message;
   private String completedAt;
-  private T data;
+  private DTODataListProdutos data;
 
-  public ApiResponse() {}
+  public DTOListProdutos() {}
 
   public String getMessage() {
     return message;
@@ -23,11 +25,11 @@ public class ApiResponse<T> {
     this.completedAt = completedAt;
   }
 
-  public T getData() {
+  public DTODataListProdutos getData() {
     return data;
   }
 
-  public void setData(T data) {
+  public void setData(DTODataListProdutos data) {
     this.data = data;
   }
 }

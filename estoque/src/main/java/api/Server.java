@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Server {
-    public static void run(Number port) {
+    public static void run(Integer port) {
         SpringApplication.run(Server.class, new String[] { "--server.port=" + port });
     }
 

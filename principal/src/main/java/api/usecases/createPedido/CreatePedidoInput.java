@@ -2,7 +2,7 @@ package api.usecases.createPedido;
 
 public class CreatePedidoInput {
   private String produtoId;
-  private Number quantidade;
+  private Integer quantidade;
   private String nomeComprador;
 
   public CreatePedidoInput() {}
@@ -15,11 +15,11 @@ public class CreatePedidoInput {
     this.produtoId = produtoId;
   }
 
-  public Number getQuantidade() {
+  public Integer getQuantidade() {
     return quantidade;
   }
 
-  public void setQuantidade(Number quantidade) {
+  public void setQuantidade(Integer quantidade) {
     this.quantidade = quantidade;
   }
 

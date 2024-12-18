@@ -1,10 +1,8 @@
 package api.base;
 
-import java.time.LocalDateTime;
-
 public class ApiResponse<T> {
   private String message;
-  private LocalDateTime completedAt;
+  private String completedAt;
   private T data;
 
   public ApiResponse() {}
@@ -17,11 +15,11 @@ public class ApiResponse<T> {
     this.message = message;
   }
 
-  public LocalDateTime getCompletedAt() {
+  public String getCompletedAt() {
     return completedAt;
   }
 
-  public void setCompletedAt(LocalDateTime completedAt) {
+  public void setCompletedAt(String completedAt) {
     this.completedAt = completedAt;
   }
 

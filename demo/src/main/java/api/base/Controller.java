@@ -12,7 +12,7 @@ public abstract class Controller <I,O> {
     ApiResponse response = new ApiResponse<O>();
     response.setMessage(this.getClass().getName());
     response.setData(data);
-    response.setCompletedAt(Time.now());
+    response.setCompletedAt(Time.now().toString());
     return response;
   }
 

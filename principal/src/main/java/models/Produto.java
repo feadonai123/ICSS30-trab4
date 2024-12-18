@@ -7,12 +7,7 @@ public class Produto {
   private Integer valor;
   private Integer quantidade;
 
-  public Produto(String nome, String slug, Integer valor, Integer quantidade){
-    this.nome = nome;
-    this.slug = slug;
-    this.valor = valor;
-    this.quantidade = quantidade;
-  }
+  public Produto(){}
 
   public String getId(){
     return id;
@@ -54,7 +49,4 @@ public class Produto {
     this.id = id;
   }
 
-  public String toString(){
-    return "Nome: " + nome + " Slug: " + slug + " Valor: " + valor + " Quantidade: " + quantidade;
-  }
 }

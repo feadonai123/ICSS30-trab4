@@ -9,4 +9,5 @@ public class Variables {
   public static String RABBITMQ_USERNAME = Dotenv.load().get("RABBITMQ_USERNAME");
   public static String RABBITMQ_PASSWORD = Dotenv.load().get("RABBITMQ_PASSWORD");
   public static String RABBITMQ_EXCHANGE = Dotenv.load().get("RABBITMQ_EXCHANGE");
+  public static String ESTOQUE_URL = Dotenv.load().get("ESTOQUE_URL");
 }

@@ -4,7 +4,7 @@ public class GetPedidoOutput {
   private String id;
   private String status;
   private String produtoId;
-  private Number quantidade;
+  private Integer quantidade;
   private String nomeComprador;
 
   public String getId() {
@@ -31,11 +31,11 @@ public class GetPedidoOutput {
     this.produtoId = produtoId;
   }
 
-  public Number getQuantidade() {
+  public Integer getQuantidade() {
     return quantidade;
   }
 
-  public void setQuantidade(Number quantidade) {
+  public void setQuantidade(Integer quantidade) {
     this.quantidade = quantidade;
   }
 
