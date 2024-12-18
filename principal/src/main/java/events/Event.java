@@ -9,6 +9,13 @@ import events.base.EventBase;
 import config.Variables;
 
 public class Event {
+
+  public static String PAGAMENTO_APROVADO = "pagamento_aprovado";
+  public static String PAGAMENTO_RECUSADO = "pagamento_recusado";
+  public static String PEDIDOS_ENVIADOS = "pedidos_enviados";
+  public static String PEDIDOS_CRIADOS = "pedidos_criados";
+  public static String PEDIDOS_EXCLUIDOS = "pedidos_excluidos";
+
   public static void run() throws AplicationError {
     Event1 event = new Event1();
     Event.enrollEvent(event);

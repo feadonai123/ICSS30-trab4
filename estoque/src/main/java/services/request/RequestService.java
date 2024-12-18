@@ -8,6 +8,7 @@ import java.net.http.HttpResponse;
 import java.util.Map;
 
 import utils.Log;
+import utils.Format;
 
 public class RequestService {
 
@@ -17,11 +18,13 @@ public class RequestService {
       this.client = HttpClient.newHttpClient();
     }
 
-    public String get(String url, Map<String, String> headers) throws RequestError, IOException, InterruptedException {
+    public <T> T get(String url, Map<String, String> headers, Class<T> valueType) throws RequestError, IOException, InterruptedException {
         Log.info("REQUEST_SERVICE", "GET request to " + url);
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder().uri(URI.create(url)).GET();
         if (headers != null) {
             headers.forEach(requestBuilder::header);
+        } else {
+            requestBuilder.header("Content-Type", "application/json");
         }
 
         HttpRequest request = requestBuilder.build();
@@ -29,19 +32,31 @@ public class RequestService {
 
         if (response.statusCode() >= 200 && response.statusCode() < 300) {
             Log.info("REQUEST_SERVICE", "GET request to " + url + " was successful");
-            return response.body();
+            try{
+                return Format.deserialize(response.body(), valueType);
+            } catch (Exception e) {
+                throw new RequestError("Erro ao deserializar objeto: " + e.getMessage());
+            }
         } else {
             Log.error("REQUEST_SERVICE", "GET request to " + url + " failed with status code: " + response.statusCode());
             throw new RequestError("Request failed with status code: " + response.statusCode());
         }
     }
 
-    public String post(String url, String body, Map<String, String> headers) throws RequestError, IOException, InterruptedException {
+    public <T> T post(String url, Object body, Map<String, String> headers, Class<T> valueType) throws RequestError, IOException, InterruptedException {
         Log.info("REQUEST_SERVICE", "POST request to " + url);
-        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder().uri(URI.create(url)).POST(HttpRequest.BodyPublishers.ofString(body));
+        String bodyStr = null;
+        try{
+            bodyStr = Format.serialize(body);
+        } catch (Exception e) {
+            throw new RequestError("Erro ao serializar objeto");
+        }
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder().uri(URI.create(url)).POST(HttpRequest.BodyPublishers.ofString(bodyStr));
                 
         if (headers != null) {
             headers.forEach(requestBuilder::header);
+        } else {
+            requestBuilder.header("Content-Type", "application/json");
         }
          
         HttpRequest request = requestBuilder.build();
@@ -49,19 +64,31 @@ public class RequestService {
 
         if (response.statusCode() >= 200 && response.statusCode() < 300) {
             Log.info("REQUEST_SERVICE", "POST request to " + url + " was successful");
-            return response.body();
+            try{
+                return Format.deserialize(response.body(), valueType);
+            } catch (Exception e) {
+                throw new RequestError("Erro ao deserializar objeto");
+            }
         } else {
             Log.error("REQUEST_SERVICE", "POST request to " + url + " failed with status code: " + response.statusCode());
             throw new RequestError("Request failed with status code: " + response.statusCode());
         }
     }
 
-    public String put(String url, String body, Map<String, String> headers) throws RequestError, IOException, InterruptedException {
+    public <T> T put(String url, Object body, Map<String, String> headers, Class<T> valueType) throws RequestError, IOException, InterruptedException {
         Log.info("REQUEST_SERVICE", "PUT request to " + url);
-        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder().uri(URI.create(url)).PUT(HttpRequest.BodyPublishers.ofString(body));
+        String bodyStr = null;
+        try{
+            bodyStr = Format.serialize(body);
+        } catch (Exception e) {
+            throw new RequestError("Erro ao serializar objeto");
+        }
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder().uri(URI.create(url)).PUT(HttpRequest.BodyPublishers.ofString(bodyStr));
 
         if (headers != null) {
             headers.forEach(requestBuilder::header);
+        } else {
+            requestBuilder.header("Content-Type", "application/json");
         }
 
         HttpRequest request = requestBuilder.build();
@@ -69,19 +96,25 @@ public class RequestService {
 
         if (response.statusCode() >= 200 && response.statusCode() < 300) {
             Log.info("REQUEST_SERVICE", "PUT request to " + url + " was successful");
-            return response.body();
+            try{
+                return Format.deserialize(response.body(), valueType);
+            } catch (Exception e) {
+                throw new RequestError("Erro ao deserializar objeto");
+            }     
         } else {
             Log.error("REQUEST_SERVICE", "PUT request to " + url + " failed with status code: " + response.statusCode());
             throw new RequestError("Request failed with status code: " + response.statusCode());
         }
     }
 
-    public String delete(String url, Map<String, String> headers) throws RequestError, IOException, InterruptedException {
+    public <T> T delete(String url, Map<String, String> headers, Class<T> valueType) throws RequestError, IOException, InterruptedException {
         Log.info("REQUEST_SERVICE", "DELETE request to " + url);
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder().uri(URI.create(url)).DELETE();
         
         if (headers != null) {
             headers.forEach(requestBuilder::header);
+        } else {
+            requestBuilder.header("Content-Type", "application/json");
         }
 
         HttpRequest request = requestBuilder.build();
@@ -89,7 +122,11 @@ public class RequestService {
     
        if (response.statusCode() >= 200 && response.statusCode() < 300) {
             Log.info("REQUEST_SERVICE", "DELETE request to " + url + " was successful");
-           return response.body();
+            try{
+                return Format.deserialize(response.body(), valueType);
+            } catch (Exception e) {
+                throw new RequestError("Erro ao deserializar objeto");
+            }
        } else {
             Log.error("REQUEST_SERVICE", "DELETE request to " + url + " failed with status code: " + response.statusCode());
            throw new RequestError("Request failed with status code: " + response.statusCode());

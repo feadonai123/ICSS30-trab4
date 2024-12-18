@@ -35,7 +35,6 @@ public class MessageConsumer {
         channel.basicConsume(queueName, true, deliverCallback, consumerTag -> {});
     }
 
-    // Interface funcional para lidar com a mensagem recebida
     public interface ConsumerHandler {
         void handleMessage(String message);
     }

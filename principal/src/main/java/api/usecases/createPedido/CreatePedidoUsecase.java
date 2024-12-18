@@ -9,7 +9,9 @@ import config.Variables;
 
 import models.Pedido;
 import models.PedidoStatus;
+import events.Event;
 import persistence.pedido.PedidoPersistence;
+import utils.Format;
 
 public class CreatePedidoUsecase extends Usecase<CreatePedidoInput, CreatePedidoOutput> {
   public void validate(CreatePedidoInput input) throws CreatePedidoErrors {
@@ -37,14 +39,14 @@ public class CreatePedidoUsecase extends Usecase<CreatePedidoInput, CreatePedido
     response.setNomeComprador(pedido.getNomeComprador());
     response.setStatus(pedido.getStatus().toString());
 
-    // String routingKey = "event1";
-    // try{
-    //   RabbitMQConfig config = RabbitMQConfig.getInstance();
-    //   MessageProducer producer = new MessageProducer(config, Variables.RABBITMQ_EXCHANGE, routingKey);
-    //   producer.sendMessage("Hello, RabbitMQ!");
-    // } catch (Exception e) {
-    //   throw new CreatePedidoErrors("Erro ao enviar mensagem para a fila");
-    // }
+    try{
+      String message = Format.serialize(pedido);
+      RabbitMQConfig config = RabbitMQConfig.getInstance();
+      MessageProducer producer = new MessageProducer(config, Variables.RABBITMQ_EXCHANGE, Event.PEDIDOS_CRIADOS);
+      producer.sendMessage(message);
+    } catch (Exception e) {
+      throw new CreatePedidoErrors("Erro ao enviar mensagem para a fila");
+    }
 
     return response;
   }
