@@ -5,6 +5,7 @@ import services.queue.RabbitMQConfig;
 import errors.AplicationError;
 
 import events.pedidoCriado.PedidoCriado;
+import events.pedidoExcluido.PedidoExcluido;
 import events.base.EventBase;
 import config.Variables;
 
@@ -19,6 +20,9 @@ public class Event {
   public static void run() throws AplicationError {
     PedidoCriado pedidoCriado = new PedidoCriado();
     Event.enrollEvent(pedidoCriado);
+
+    PedidoExcluido pedidoExcluido = new PedidoExcluido();
+    Event.enrollEvent(pedidoExcluido);
   }
   private static void enrollEvent(EventBase event) throws AplicationError {
     try{

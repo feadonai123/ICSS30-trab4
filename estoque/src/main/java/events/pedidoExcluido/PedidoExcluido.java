@@ -1,4 +1,4 @@
-package events.pedidoCriado;
+package events.pedidoExcluido;
 
 import events.base.EventBase;
 
@@ -10,9 +10,9 @@ import events.Event;
 import utils.Format;
 import errors.AplicationError;
 
-public class PedidoCriado extends EventBase<String> {
-  public PedidoCriado() {
-    super("ESTOQUE_PEDIDOS_CRIADOS", Event.PEDIDOS_CRIADOS);
+public class PedidoExcluido extends EventBase<String> {
+  public PedidoExcluido() {
+    super("ESTOQUE_PEDIDOS_EXCLUIDOS", Event.PEDIDOS_EXCLUIDOS);
   }
 
   public void exec(String input) throws AplicationError {
@@ -30,7 +30,7 @@ public class PedidoCriado extends EventBase<String> {
       return;
     }
     
-    produto.setQuantidade(produto.getQuantidade() - pedido.getQuantidade());
+    produto.setQuantidade(produto.getQuantidade() + pedido.getQuantidade());
     persistence.update(produto);
   }
 }
