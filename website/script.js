@@ -225,11 +225,16 @@ function renderOrders(pedidos) {
 }
 
 const eventSource = new EventSource('http://localhost:3005/stream-sse');
+
 // Evento disparado quando uma mensagem é recebida
 eventSource.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    console.log('Mensagem recebida:', data);
+    console.log('Mensagem padrão recebida:', event.data);
 };
+
+eventSource.addEventListener('custom-event', (event) => {
+    const data = JSON.parse(event.data);
+    console.log('Evento customizado recebido:', data);
+});
 
 // Evento disparado quando ocorre um erro
 eventSource.onerror = (error) => {
@@ -242,3 +247,26 @@ eventSource.onopen = () => {
     console.log('Conexão SSE estabelecida');
     console.log('Conexão estabelecida com o servidor.');
 };
+
+function postEvent() {
+    const body = {
+        text: 'teste',
+    };
+    fetch('http://localhost:3005/send-event', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    })
+        .then((response) => {
+            if (response.ok) {
+                console.log('Evento enviado com sucesso');
+            } else {
+                console.error('Erro ao enviar o evento:', response.statusText);
+            }
+        })
+        .catch((error) => {
+            console.error('Erro ao enviar o evento:', error);
+        });
+}

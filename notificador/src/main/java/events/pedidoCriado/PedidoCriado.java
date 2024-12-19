@@ -12,7 +12,7 @@ import utils.Format;
 public class PedidoCriado extends EventBase<String> {
 
     public PedidoCriado() {
-        super("PRINCIPAL_PEDIDO_CRIADO", Event.PEDIDO_CRIADO);
+        super("NOTIFICADOR_PEDIDO_CRIADO", Event.PEDIDO_CRIADO);
     }
 
     public void exec(String input) throws AplicationError {
@@ -22,11 +22,10 @@ public class PedidoCriado extends EventBase<String> {
         } catch (Exception e) {
             throw new AplicationError("Erro ao deserializar objeto: " + e.getMessage());
         }
-
+        System.out.println("Oi");
         Notificacao notificacao = new Notificacao("Pedido criado",
                 PedidoStatus.CRIADO, pedido.getId());
-        var sink = Sink.getInstance().emit(notificacao);
-        sink.emit(notificacao);
+        Sink.getInstance().emit(notificacao);
     }
 
 }

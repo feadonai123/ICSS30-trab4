@@ -1,3 +1,4 @@
+
 package main.java.utils;
 
 import org.springframework.http.codec.ServerSentEvent;
@@ -6,10 +7,10 @@ import main.java.models.Notificacao;
 
 public class Sink {
 
-    private Sinks.Many<ServerSentEvent<Notificacao>> sink;
+    private final Sinks.Many<ServerSentEvent<Notificacao>> sink;
     private static Sink instance;
 
-    public Sink() {
+    private Sink() {
         this.sink = Sinks.many().multicast().onBackpressureBuffer();
     }
 
@@ -23,10 +24,10 @@ public class Sink {
                 .event("custom-event")
                 .data(data)
                 .build();
-        sink.tryEmitNext(event);
+        sink.tryEmitNext(event).orThrow();
     }
 
-    public static Sink getInstance() {
+    public static synchronized Sink getInstance() {
         if (instance == null) {
             instance = new Sink();
         }
