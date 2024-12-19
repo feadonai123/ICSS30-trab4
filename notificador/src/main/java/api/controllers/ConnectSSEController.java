@@ -19,6 +19,8 @@ import java.time.LocalTime;
 @RestController
 public class ConnectSSEController {
 
+    private final Sinks.Many<ServerSentEvent<Notificacao>> sink;
+
     // Endpoint SSE que o cliente consome
     @GetMapping("/stream-sse")
     public Flux<ServerSentEvent<Notificacao>> streamEvents() {
