@@ -26,7 +26,8 @@ public class PagamentoRecusado extends EventBase<String> {
       throw new AplicationError("Erro ao deserializar objeto: " + e.getMessage());
     }
 
-    Notificacao notificacao = new Notificacao("Pagamento recusado", PedidoStatus.RECUSADO, pedido.getId());
-    Sink.emit(notificacao);
+    // Notificacao notificacao = new Notificacao("Pagamento recusado",
+    // PedidoStatus.RECUSADO, pedido.getId());
+    // Sink.emit(notificacao);
   }
 }

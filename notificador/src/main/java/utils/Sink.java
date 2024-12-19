@@ -6,19 +6,30 @@ import main.java.models.Notificacao;
 
 public class Sink {
 
-    private static final Sinks.Many<ServerSentEvent<Notificacao>> sink = Sinks.many().multicast()
-            .onBackpressureBuffer();
+    private Sinks.Many<ServerSentEvent<Notificacao>> sink;
+    private static Sink instance;
 
-    public static Sinks.Many<ServerSentEvent<Notificacao>> getSink() {
+    public Sink() {
+        this.sink = Sinks.many().multicast().onBackpressureBuffer();
+    }
+
+    public Sinks.Many<ServerSentEvent<Notificacao>> getSink() {
         return sink;
     }
 
-    public static void emit(Notificacao data) {
+    public void emit(Notificacao data) {
         ServerSentEvent<Notificacao> event = ServerSentEvent.<Notificacao>builder()
                 .id(String.valueOf(System.currentTimeMillis()))
                 .event("custom-event")
                 .data(data)
                 .build();
         sink.tryEmitNext(event);
+    }
+
+    public static Sink getInstance() {
+        if (instance == null) {
+            instance = new Sink();
+        }
+        return instance;
     }
 }

@@ -23,8 +23,10 @@ public class PedidoCriado extends EventBase<String> {
             throw new AplicationError("Erro ao deserializar objeto: " + e.getMessage());
         }
 
-        Notificacao notificacao = new Notificacao("Pedido criado", PedidoStatus.CRIADO, pedido.getId());
-        Sink.emit(notificacao);
+        Notificacao notificacao = new Notificacao("Pedido criado",
+                PedidoStatus.CRIADO, pedido.getId());
+        var sink = Sink.getInstance().emit(notificacao);
+        sink.emit(notificacao);
     }
 
 }

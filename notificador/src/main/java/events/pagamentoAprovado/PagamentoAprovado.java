@@ -24,8 +24,9 @@ public class PagamentoAprovado extends EventBase<String> {
     } catch (Exception e) {
       throw new AplicationError("Erro ao deserializar objeto: " + e.getMessage());
     }
-    Notificacao notificacao = new Notificacao("O pagamento do pedido foi efetivado", PedidoStatus.PAGADO,
-        pedido.getId());
-    Sink.emit(notificacao);
+    // Notificacao notificacao = new Notificacao("O pagamento do pedido foi
+    // efetivado", PedidoStatus.PAGADO,
+    // pedido.getId());
+    // Sink.emit(notificacao);
   }
 }
