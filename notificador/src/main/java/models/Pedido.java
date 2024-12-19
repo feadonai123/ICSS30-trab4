@@ -7,12 +7,7 @@ public class Pedido {
   private Integer quantidade;
   private String nomeComprador;
 
-  public Pedido(String produtoId, Integer quantidade, String nomeComprador, String status){
-    this.produtoId = produtoId;
-    this.quantidade = quantidade;
-    this.nomeComprador = nomeComprador;
-    this.status = status;
-  }
+  public Pedido(){}
 
   public String getId(){
     return id;

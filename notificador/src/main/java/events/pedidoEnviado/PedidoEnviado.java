@@ -10,22 +10,22 @@ import java.util.List;
 import events.Event;
 import utils.Format;
 import errors.AplicationError;
+import models.Entrega;
 
 public class PedidoEnviado extends EventBase<String> {
   public PedidoEnviado() {
-    super("PRINCIPAL_PEDIDOS_ENVIADOS", Event.PEDIDOS_ENVIADOS);
+    super("NOTIFICADOR_PEDIDOS_ENVIADOS", Event.PEDIDOS_ENVIADOS);
   }
 
   public void exec(String input) throws AplicationError {
-    Pedido pedido = null;
-    try {
-      pedido = Format.deserialize(input, Pedido.class);
+    Entrega entrega = null;
+    try{
+      entrega = Format.deserialize(input, Entrega.class);
     } catch (Exception e) {
       throw new AplicationError("Erro ao deserializar objeto: " + e.getMessage());
     }
 
-    // Notificacao notificacao = new Notificacao("Pedido enviado",
-    // PedidoStatus.ENVIADO, pedido.getId());
+    // Notificacao notificacao = new Notificacao("Pedido enviado", PedidoStatus.ENVIADO, entrega.getPedidoId());
     // Sink.emit(notificacao);
   }
 }
