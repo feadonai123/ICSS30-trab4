@@ -16,7 +16,6 @@ public class Event {
   public static String PAGAMENTO_APROVADO = "pagamento_aprovado";
   public static String PAGAMENTO_RECUSADO = "pagamento_recusado";
   public static String PEDIDOS_ENVIADOS = "pedidos_enviados";
-  public static String PEDIDO_CRIADO = "pedido_criado";
   public static String PEDIDOS_CRIADOS = "pedidos_criados";
   public static String PEDIDOS_EXCLUIDOS = "pedidos_excluidos";
 

@@ -18,6 +18,6 @@ public class Main {
     System.out.println("Port: " + Variables.PORT);
 
     Server.run(Variables.PORT);
-    // Event.run();
+    Event.run();
   }
 }

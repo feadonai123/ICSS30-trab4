@@ -12,7 +12,7 @@ import utils.Format;
 public class PedidoCriado extends EventBase<String> {
 
     public PedidoCriado() {
-        super("NOTIFICADOR_PEDIDO_CRIADO", Event.PEDIDO_CRIADO);
+        super("NOTIFICADOR_PEDIDO_CRIADO", Event.PEDIDOS_CRIADOS);
     }
 
     public void exec(String input) throws AplicationError {
