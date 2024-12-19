@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const produtos = message.data.produtos;
             produtosTotal.push(...produtos)
-            console.log(produtos)
             renderProducts(produtos);
         } catch (error) {
             console.error(error);
@@ -166,7 +165,6 @@ async function makeOrder() {
         // Limpa o objeto cart
         cart.length = 0;
         const pedidoRetornado = message.data;
-        console.log(pedidoRetornado)
         orders.push(pedidoRetornado);
         renderCardOrder(pedidoRetornado);
     } catch (error) {
@@ -177,7 +175,6 @@ async function makeOrder() {
 
 function renderCardOrder(pedidoRetornado) {
     // Cria o HTML do card do pedido
-    console.log(pedidoRetornado)
 
     const produto = produtosTotal.find((item) => item.id === pedidoRetornado.produtoId);
     const precoTotal = produto.valor * pedidoRetornado.quantidade;
@@ -188,6 +185,7 @@ function renderCardOrder(pedidoRetornado) {
         <p>Quantidade: ${pedidoRetornado.quantidade}</p>
         <p>Preço total: R$ ${precoTotal.toFixed(2)}</p>
         <p>Status: ${pedidoRetornado.status}</p>
+        <button data=${pedidoRetornado.id} onClick="DeleteOrder(this)">Cancelar</button>
         </div>
     `;
     orderContainer.insertAdjacentHTML('beforeend', card);
@@ -197,7 +195,7 @@ function renderCardOrder(pedidoRetornado) {
 async function atualizarCardsOrders() {
 
     try {
-        const response = fetch(API_URL + 'pedidos');
+        const response = await fetch(API_URL + 'pedidos');
 
         if (!response.ok) {
             throw new Error(response);
@@ -208,6 +206,7 @@ async function atualizarCardsOrders() {
             throw new Error(message.error);
         }
         const pedidos = message.data.pedidos;
+        orders.length = 0;
         orders.push(...pedidos);
         renderOrders(orders);
     } catch (error) {
@@ -217,7 +216,7 @@ async function atualizarCardsOrders() {
 }
 
 function renderOrders(pedidos) {
-    orderContainer.innerHTML = ''; // Limpa o conteúdo anterior
+    orderContainer.innerHTML = '';// Limpa o conteúdo anterior
 
     pedidos.forEach((pedido) => {
         renderCardOrder(pedido);
@@ -234,6 +233,7 @@ eventSource.onmessage = (event) => {
 eventSource.addEventListener('custom-event', (event) => {
     const data = JSON.parse(event.data);
     console.log('Evento customizado recebido:', data);
+    atualizarCardsOrders();
 });
 
 // Evento disparado quando ocorre um erro
@@ -268,5 +268,31 @@ function postEvent() {
         })
         .catch((error) => {
             console.error('Erro ao enviar o evento:', error);
+        });
+}
+
+function DeleteOrder(cardComponent) {
+    const id = cardComponent.getAttribute('data');
+    const pedido = orders.find((item) => item.id === id);
+    if (pedido.status === 'Entregue') {
+        alert('Pedido já entregue');
+        return;
+    }
+    fetch(API_URL + 'pedido/' + id, {
+        method: 'DELETE',
+    })
+        .then((response) => {
+            if (response.ok) {
+                const orderItem = document.getElementById(`order-item-${id}`);
+                orderItem.remove();
+                orders.splice(orders.indexOf(pedido), 1);
+            } else {
+                throw new Error('Erro ao cancelar pedido');
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+            alert('Erro ao cancelar pedido');
+
         });
 }

@@ -25,7 +25,14 @@ public class PedidoEnviado extends EventBase<String> {
       throw new AplicationError("Erro ao deserializar objeto: " + e.getMessage());
     }
 
-    // Notificacao notificacao = new Notificacao("Pedido enviado", PedidoStatus.ENVIADO, entrega.getPedidoId());
-    // Sink.emit(notificacao);
+    Notificacao notificacao = new Notificacao("Pedido enviado", PedidoStatus.ENVIADO, entrega.getPedidoId());
+    var sink = Sink.getInstance();
+    try {
+        System.out.println("Enviando evento: " + notificacao);
+        sink.emit(notificacao);
+        System.out.println("Evento enviado com sucesso");
+    } catch (Exception e) {
+        System.err.println("Erro ao enviar evento: " + e.getMessage());
+    }
   }
 }
