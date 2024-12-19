@@ -19,6 +19,10 @@ public class GetProdutoUsecase extends Usecase<GetProdutoInput, GetProdutoOutput
     ProdutoPersistence persistence = ProdutoPersistence.getInstance();
     Produto produto = persistence.get(input.getProdutoId());
 
+    if(produto == null) {
+      throw new GetProdutoErrors("Produto não encontrado");
+    }
+
     GetProdutoOutput response = new GetProdutoOutput();
     response.setId(produto.getId());
     response.setNome(produto.getNome());

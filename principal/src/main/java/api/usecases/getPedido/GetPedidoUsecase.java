@@ -20,6 +20,10 @@ public class GetPedidoUsecase extends Usecase<GetPedidoInput, GetPedidoOutput> {
     PedidoPersistence persistence = PedidoPersistence.getInstance();
     Pedido pedido = persistence.get(input.getPedidoId());
 
+    if(pedido == null) {
+      throw new GetPedidoErrors("Pedido não encontrado");
+    }
+
     GetPedidoOutput response = new GetPedidoOutput();
     response.setId(pedido.getId());
     response.setProdutoId(pedido.getProdutoId());

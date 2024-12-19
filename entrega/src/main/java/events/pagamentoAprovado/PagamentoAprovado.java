@@ -2,10 +2,10 @@ package events.pagamentoAprovado;
 
 import events.base.EventBase;
 
-import models.Pedido;
+import models.Entrega;
 import models.Pagamento;
-import models.PedidoStatus;
-import persistence.pedido.PedidoPersistence;
+import models.EntregaStatus;
+import persistence.entrega.EntregaPersistence;
 import java.util.List;
 import events.Event;
 import utils.Format;
@@ -13,7 +13,7 @@ import errors.AplicationError;
 
 public class PagamentoAprovado extends EventBase<String> {
   public PagamentoAprovado() {
-    super("PRINCIPAL_PAGAMENTO_APROVADO", Event.PAGAMENTO_APROVADO);
+    super("ENTREGA_PAGAMENTO_APROVADO", Event.PAGAMENTO_APROVADO);
   }
 
   public void exec(String input) throws AplicationError {
@@ -24,14 +24,9 @@ public class PagamentoAprovado extends EventBase<String> {
       throw new AplicationError("Erro ao deserializar objeto: " + e.getMessage());
     }
 
-    PedidoPersistence persistence = PedidoPersistence.getInstance();
-    Pedido pedido = persistence.get(pagamento.getPedidoId());
+    EntregaPersistence persistence = EntregaPersistence.getInstance();
+    Entrega entrega = new Entrega(null, pagamento.getPedidoId(), EntregaStatus.PENDENTE);
 
-    if(pedido == null) {
-      return;
-    }
-    
-    pedido.setStatus(PedidoStatus.PAGO);
-    persistence.update(pedido);
+    persistence.save(entrega);
   }
 }

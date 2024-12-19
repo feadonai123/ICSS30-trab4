@@ -1,0 +1,55 @@
+package models;
+
+public class Pedido {
+  private String id;
+  private String status;
+  private String produtoId;
+  private Integer quantidade;
+  private String nomeComprador;
+
+  public Pedido(){}
+
+  public String getId(){
+    return id;
+  }
+
+  public String getProdutoId(){
+    return produtoId;
+  }
+
+  public Integer getQuantidade(){
+    return quantidade;
+  }
+
+  public String getNomeComprador(){
+    return nomeComprador;
+  }
+
+  public String getStatus(){
+    return status;
+  }
+
+  public void setProdutoId(String produtoId){
+    this.produtoId = produtoId;
+  }
+
+  public void setQuantidade(Integer quantidade){
+    this.quantidade = quantidade;
+  }
+
+  public void setNomeComprador(String nomeComprador){
+    this.nomeComprador = nomeComprador;
+  }
+
+  public void setStatus(String status){
+    this.status = status;
+  }
+
+  public void setId(String id){
+    this.id = id;
+  }
+
+  public String toString(){
+    return "Produto: " + produtoId + " Quantidade: " + quantidade + " Nome do comprador: " + nomeComprador + " Status: " + status;
+  }
+}
