@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import api.usecases.getProduto.GetProdutoUsecase;
 import api.usecases.getProduto.GetProdutoOutput;
@@ -14,6 +15,7 @@ import errors.AplicationError;
 import api.base.Controller;
 import api.base.ApiResponse;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class GetProdutoController extends Controller<GetProdutoInput, GetProdutoOutput> {
     @GetMapping("/api/produto/{id}")

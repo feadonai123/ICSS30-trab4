@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import api.usecases.listProdutos.ListProdutosUsecase;
 import api.usecases.listProdutos.ListProdutosOutput;
@@ -13,6 +14,7 @@ import errors.AplicationError;
 import api.base.Controller;
 import api.base.ApiResponse;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class ListProdutosController extends Controller<ListProdutosInput, ListProdutosOutput> {
     @GetMapping("/api/produtos")

@@ -13,8 +13,10 @@ import api.usecases.deletePedido.DeletePedidoOutput;
 import api.usecases.deletePedido.DeletePedidoInput;
 import errors.AplicationError;
 import api.base.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import api.base.ApiResponse;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class DeletePedidoController extends Controller<DeletePedidoInput, DeletePedidoOutput> {
     @DeleteMapping("/api/pedido/{id}")
